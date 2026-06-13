@@ -42,7 +42,7 @@ jobs:
           BRANCH="sync/upstream-$(date +%Y-%m-%d)"
           echo "BRANCH=$BRANCH" >> $GITHUB_ENV
           git checkout -b "$BRANCH"
-          git merge upstream/main --no-edit -m "chore: sync upstream polyclaude ($(date +%Y-%m-%d))"
+          git merge upstream/main --allow-unrelated-histories --no-edit -m "chore: sync upstream polyclaude ($(date +%Y-%m-%d))"
           git push origin "$BRANCH"
 
       - name: Open pull request
