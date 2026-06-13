@@ -36,13 +36,13 @@ jobs:
           echo "behind=$BEHIND" >> $GITHUB_OUTPUT
           echo "Upstream is $BEHIND commit(s) ahead"
 
-      - name: Create sync branch and merge
+      - name: Create sync branch from upstream
         if: steps.check.outputs.behind != '0'
         run: |
           BRANCH="sync/upstream-$(date +%Y-%m-%d)"
           echo "BRANCH=$BRANCH" >> $GITHUB_ENV
-          git checkout -b "$BRANCH"
-          git merge upstream/main --allow-unrelated-histories --no-edit -m "chore: sync upstream polyclaude ($(date +%Y-%m-%d))"
+          # Branch directly from upstream — no merge, no history conflicts
+          git checkout -b "$BRANCH" upstream/main
           git push origin "$BRANCH"
 
       - name: Open pull request
